@@ -1,14 +1,26 @@
 {
-  "name": "fahh-sound-on-error",
-  "displayName": "Fahh Sound on Error",
-  "description": "Plays a 'fahh' sound when code errors are detected.",
+  "name": "kattakada-sound-on-error",
+  "displayName": "Kattakada Sound on Error",
+  "description": "Plays a Kattakada sound when code errors are detected.",
   "version": "0.0.1",
   "publisher": "praneeth-reddy-vallem",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/praneethreddie/kattakada-sound-on-error"
+  },
   "engines": {
     "vscode": "^1.90.0"
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "sound",
+    "error",
+    "notification",
+    "audio",
+    "feedback"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -17,7 +29,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "fahh-sound-on-error.testSound",
+        "command": "kattakada.testSound",
         "title": "Kattakada"
       }
     ]

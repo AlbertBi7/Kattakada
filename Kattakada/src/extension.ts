@@ -11,10 +11,10 @@ function getRandomSoundPath(context: vscode.ExtensionContext): string {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Fahh Sound extension is now active!');
+    console.log('Kattakada Sound extension is now active!');
 
     // Command to test the sound
-    let disposable = vscode.commands.registerCommand('fahh-sound-on-error.testSound', () => {
+    let disposable = vscode.commands.registerCommand('kattakada.testSound', () => {
         playSound(getRandomSoundPath(context));
         vscode.window.showInformationMessage('Kattakada!');
     });
@@ -58,9 +58,27 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function playSound(soundPath: string) {
-    // PowerShell command to play MP3 on Windows - limited to 3 seconds max
-    const maxDuration = 3; // Maximum playback duration in seconds
-    const command = `powershell -c "Add-Type -AssemblyName presentationCore; $media = New-Object System.Windows.Media.MediaPlayer; $media.Open('${soundPath}'); $media.Play(); while($media.NaturalDuration.HasTimeSpan -eq $false) { Start-Sleep -Milliseconds 100 }; $duration = [Math]::Min($media.NaturalDuration.TimeSpan.TotalSeconds, ${maxDuration}); Start-Sleep -Seconds $duration; $media.Stop(); $media.Close()"`;
+    let command: string;
+    
+    switch (process.platform) {
+        case 'win32':
+            // Windows: PowerShell with MediaPlayer
+            const maxDuration = 3;
+            command = `powershell -c "Add-Type -AssemblyName presentationCore; $media = New-Object System.Windows.Media.MediaPlayer; $media.Open('${soundPath}'); $media.Play(); while($media.NaturalDuration.HasTimeSpan -eq $false) { Start-Sleep -Milliseconds 100 }; $duration = [Math]::Min($media.NaturalDuration.TimeSpan.TotalSeconds, ${maxDuration}); Start-Sleep -Seconds $duration; $media.Stop(); $media.Close()"`;
+            break;
+        case 'darwin':
+            // macOS: afplay is built-in
+            command = `afplay "${soundPath}"`;
+            break;
+        case 'linux':
+            // Linux: try multiple players that support MP3
+            // mpg123 (common), mpv (modern), ffplay (ffmpeg), cvlc (VLC)
+            command = `mpg123 -q "${soundPath}" 2>/dev/null || mpv --no-video --really-quiet "${soundPath}" 2>/dev/null || ffplay -nodisp -autoexit -loglevel quiet "${soundPath}" 2>/dev/null || cvlc --play-and-exit --quiet "${soundPath}" 2>/dev/null`;
+            break;
+        default:
+            console.error(`Unsupported platform: ${process.platform}`);
+            return;
+    }
 
     exec(command, (error) => {
         if (error) {
