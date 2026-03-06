@@ -1,0 +1,35 @@
+{
+  "name": "fahh-sound-on-error",
+  "displayName": "Fahh Sound on Error",
+  "description": "Plays a 'fahh' sound when code errors are detected.",
+  "version": "0.0.1",
+  "publisher": "praneeth-reddy-vallem",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "fahh-sound-on-error.testSound",
+        "title": "Fahh: Test Sound"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0",
+    "@types/node": "^20.x",
+    "typescript": "^5.x"
+  }
+}
