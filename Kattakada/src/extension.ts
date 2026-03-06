@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Command to test the sound
     let disposable = vscode.commands.registerCommand('fahh-sound-on-error.testSound', () => {
         playSound(getRandomSoundPath(context));
-        vscode.window.showInformationMessage('Fahh!');
+        vscode.window.showInformationMessage('Kattakada!');
     });
 
     // --- 1. Diagnostic Listener (Editor Errors) ---
