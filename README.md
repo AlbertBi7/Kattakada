@@ -1,6 +1,6 @@
 # Kattakada Sound on Error 🎤
 
-A VS Code extension that plays a sound whenever your code encounters an error. Never miss a mistake again!
+A VS Code extension that plays a sound ('Ne Kattakada Evadeya') whenever your code encounters an error. Never miss a mistake again!
 
 ## Features
 
